@@ -52,7 +52,7 @@ class DistrictOfficeGroups extends React.Component {
     // everything now will be in props.store and managed by relay
     for (let i = 0; i < this.props.groups.length; i++) {
       this.state.groups.push(
-        <Group groupName = {this.props.groups[i].nazwaGrupy}/>
+        <Group groupName = {this.props.groups[i].node.nazwaGrupy}/>
       );
     }
 
@@ -63,7 +63,7 @@ class DistrictOfficeGroups extends React.Component {
 DistrictOfficeGroups = Relay.createContainer(DistrictOfficeGroups, {
   // data requirements
   fragments: {
-    groups: () => Relay.QL `fragment on GroupType @relay(plural: true) {  nazwaGrupy  }`,
+    groups: () => Relay.QL `fragment on GroupEdge @relay(plural: true)  { node { nazwaGrupy }  }`,
   },
 });
 

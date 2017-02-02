@@ -22142,7 +22142,7 @@
 	          this.props.store.offices[0].name
 	        ),
 	        _react2.default.createElement(_DistrictOfficeContact2.default, { districtName: this.props.store.offices[0].name }),
-	        _react2.default.createElement(_DistrictOfficeGroups2.default, { groups: this.props.store.offices[0].groups })
+	        _react2.default.createElement(_DistrictOfficeGroups2.default, { groups: this.props.store.offices[0].groupConnection.edges })
 	      );
 	    }
 	    //      <DistrictOfficeGroups/>
@@ -22165,14 +22165,86 @@
 	              metadata: {},
 	              type: 'String'
 	            }, {
-	              children: [].concat.apply([], [_reactRelay2.default.QL.__frag(RQL_0)]),
-	              fieldName: 'groups',
+	              calls: [{
+	                kind: 'Call',
+	                metadata: {
+	                  type: 'Int'
+	                },
+	                name: 'first',
+	                value: {
+	                  kind: 'CallValue',
+	                  callValue: 3
+	                }
+	              }],
+	              children: [{
+	                children: [].concat.apply([], [{
+	                  fieldName: 'cursor',
+	                  kind: 'Field',
+	                  metadata: {
+	                    isGenerated: true,
+	                    isRequisite: true
+	                  },
+	                  type: 'String'
+	                }, {
+	                  children: [{
+	                    fieldName: 'id',
+	                    kind: 'Field',
+	                    metadata: {
+	                      isGenerated: true,
+	                      isRequisite: true
+	                    },
+	                    type: 'ID'
+	                  }],
+	                  fieldName: 'node',
+	                  kind: 'Field',
+	                  metadata: {
+	                    canHaveSubselections: true,
+	                    isGenerated: true,
+	                    isRequisite: true
+	                  },
+	                  type: 'GroupType'
+	                }, _reactRelay2.default.QL.__frag(RQL_0)]),
+	                fieldName: 'edges',
+	                kind: 'Field',
+	                metadata: {
+	                  canHaveSubselections: true,
+	                  isPlural: true
+	                },
+	                type: 'GroupEdge'
+	              }, {
+	                children: [{
+	                  fieldName: 'hasNextPage',
+	                  kind: 'Field',
+	                  metadata: {
+	                    isGenerated: true,
+	                    isRequisite: true
+	                  },
+	                  type: 'Boolean'
+	                }, {
+	                  fieldName: 'hasPreviousPage',
+	                  kind: 'Field',
+	                  metadata: {
+	                    isGenerated: true,
+	                    isRequisite: true
+	                  },
+	                  type: 'Boolean'
+	                }],
+	                fieldName: 'pageInfo',
+	                kind: 'Field',
+	                metadata: {
+	                  canHaveSubselections: true,
+	                  isGenerated: true,
+	                  isRequisite: true
+	                },
+	                type: 'PageInfo'
+	              }],
+	              fieldName: 'groupConnection',
 	              kind: 'Field',
 	              metadata: {
 	                canHaveSubselections: true,
-	                isPlural: true
+	                isConnection: true
 	              },
-	              type: 'GroupType'
+	              type: 'GroupConnection'
 	            }, {
 	              fieldName: 'id',
 	              kind: 'Field',
@@ -22297,7 +22369,7 @@
 	      //  console.log ('groups props: '+JSON.stringify(this.props));
 	      // everything now will be in props.store and managed by relay
 	      for (var i = 0; i < this.props.groups.length; i++) {
-	        this.state.groups.push(_react2.default.createElement(_Group2.default, { groupName: this.props.groups[i].nazwaGrupy }));
+	        this.state.groups.push(_react2.default.createElement(_Group2.default, { groupName: this.props.groups[i].node.nazwaGrupy }));
 	      }
 	
 	      return _react2.default.createElement(
@@ -22318,10 +22390,26 @@
 	      return function () {
 	        return {
 	          children: [{
-	            fieldName: 'nazwaGrupy',
+	            children: [{
+	              fieldName: 'nazwaGrupy',
+	              kind: 'Field',
+	              metadata: {},
+	              type: 'String'
+	            }, {
+	              fieldName: 'id',
+	              kind: 'Field',
+	              metadata: {
+	                isGenerated: true,
+	                isRequisite: true
+	              },
+	              type: 'ID'
+	            }],
+	            fieldName: 'node',
 	            kind: 'Field',
-	            metadata: {},
-	            type: 'String'
+	            metadata: {
+	              canHaveSubselections: true
+	            },
+	            type: 'GroupType'
 	          }],
 	          id: _reactRelay2.default.QL.__id(),
 	          kind: 'Fragment',
@@ -22329,7 +22417,7 @@
 	            plural: true
 	          },
 	          name: 'DistrictOfficeGroups_GroupsRelayQL',
-	          type: 'GroupType'
+	          type: 'GroupEdge'
 	        };
 	      }();
 	    }

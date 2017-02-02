@@ -23,6 +23,7 @@
     "express": "4.13.x",
     "express-graphql": "^0.6.1",
     "graphql": "^0.8.2",
+    "graphql-relay": "^0.5.1",
     "jest": "^17.0.3",
     "jest-cli": "^17.0.3",
     "json-loader": "^0.5.4",
