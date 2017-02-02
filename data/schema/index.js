@@ -7,8 +7,10 @@ import {
 
 import DistrictOfficeType from './types/districtOffice';
 
-const RootQueryType = new GraphQLObjectType({
-  name: 'RootQueryType',
+let store = {};
+
+const StoreType = new GraphQLObjectType({
+  name: 'Store',
 
   fields: {
     offices: {
@@ -37,7 +39,16 @@ const RootQueryType = new GraphQLObjectType({
 });
 
 const ncSchema = new GraphQLSchema({
-  query: RootQueryType,
+  query: new GraphQLObjectType({
+    name: 'Query',
+    fields: () => ({
+      store: {
+        type: StoreType,
+        resolve: () => store,
+      },
+    }),
+  }),
+
   // mutation:
 });
 

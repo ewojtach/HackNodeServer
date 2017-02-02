@@ -17,6 +17,11 @@ import cfenv from 'cfenv';
 import ncSchema from './data/schema';
 import graphqlHTTP from 'express-graphql';
 
+import { graphql } from 'graphql';
+import { introspectionQuery } from 'graphql/utilities';
+
+import fs from 'fs';
+
 
 // create a new express server
 const app = express();
@@ -29,6 +34,18 @@ app.use('/graphql', graphqlHTTP({
   schema: ncSchema,
   graphiql: true,
 }));
+
+// export schema for relay client
+(async () => {
+  console.log('try to create json schema');
+  const json = await graphql(ncSchema, introspectionQuery);
+//  console.log('graphql call ended: ' + JSON.stringify(json, null, 2));
+  fs.writeFileSync('./data/ncSchema.json', JSON.stringify(json, null, 2));
+  console.log('JSON test created');
+})();
+
+
+
 
 // get the app environment from Cloud Foundry
 const appEnv = cfenv.getAppEnv();

@@ -2,8 +2,9 @@ import React from 'react';
 import Group from './Group.jsx';
 import { Lokka } from 'lokka';
 import { Transport } from 'lokka-transport-http';
+import Relay from 'react-relay';
 
-export default class DistrictOfficeGroups extends React.Component {
+class DistrictOfficeGroups extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -11,7 +12,7 @@ export default class DistrictOfficeGroups extends React.Component {
       groups: [],
     };
   }
-
+/*
   componentWillMount() {
     this.fetchGroups();
   }
@@ -20,6 +21,9 @@ export default class DistrictOfficeGroups extends React.Component {
     const client = new Lokka({
       transport: new Transport('http://localhost:6001/graphql'),
     });
+
+    console.log(Relay.QL `query { offices { name, groups { nazwaGrupy } } }`);
+
 
     client.query(`
 			{
@@ -41,14 +45,26 @@ export default class DistrictOfficeGroups extends React.Component {
   console.log('groups from state: ' + this.state.groupList[0].nazwaGrupy);
 		});
   }
+  */
 
   render() {
-    for (let i = 0; i < this.state.groupList.length; i++) {
+  //  console.log ('groups props: '+JSON.stringify(this.props));
+    // everything now will be in props.store and managed by relay
+    for (let i = 0; i < this.props.groups.length; i++) {
       this.state.groups.push(
-        <Group groupName = {this.state.groupList[i].nazwaGrupy}/>
+        <Group groupName = {this.props.groups[i].nazwaGrupy}/>
       );
     }
 
     return (<div>{this.state.groups}</div>);
   }
 }
+
+DistrictOfficeGroups = Relay.createContainer(DistrictOfficeGroups, {
+  // data requirements
+  fragments: {
+    groups: () => Relay.QL `fragment on GroupType @relay(plural: true) {  nazwaGrupy  }`,
+  },
+});
+
+export default DistrictOfficeGroups;

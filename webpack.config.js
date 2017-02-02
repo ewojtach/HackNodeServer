@@ -15,7 +15,10 @@ const config = {
         test: /\.jsx?/, exclude: /node_modules/,
         include: APP_DIR,
         loader: 'babel-loader',
-        query: { presets: ['react', 'es2015'] },
+        query: {
+          presets: ['react', 'es2015', 'stage-0'],
+          plugins: ['./babelRelayPlugin'].map(require.resolve),
+        },
       },
       {
         test: /\.json$/,
