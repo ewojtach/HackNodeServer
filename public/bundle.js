@@ -22125,7 +22125,14 @@
 	  function DistrictOffice(props) {
 	    _classCallCheck(this, DistrictOffice);
 	
-	    return _possibleConstructorReturn(this, (DistrictOffice.__proto__ || Object.getPrototypeOf(DistrictOffice)).call(this, props));
+	    var _this = _possibleConstructorReturn(this, (DistrictOffice.__proto__ || Object.getPrototypeOf(DistrictOffice)).call(this, props));
+	
+	    _this.setLimit = function (e) {
+	      var newLimit = Number(e.target.value);
+	      _this.props.relay.setVariables({ limit: newLimit });
+	    };
+	
+	    return _this;
 	  }
 	
 	  _createClass(DistrictOffice, [{
@@ -22142,6 +22149,20 @@
 	          this.props.store.offices[0].name
 	        ),
 	        _react2.default.createElement(_DistrictOfficeContact2.default, { districtName: this.props.store.offices[0].name }),
+	        _react2.default.createElement(
+	          'select',
+	          { onChange: this.setLimit },
+	          _react2.default.createElement(
+	            'option',
+	            { value: '5' },
+	            '5'
+	          ),
+	          _react2.default.createElement(
+	            'option',
+	            { value: '10', selected: true },
+	            '10'
+	          )
+	        ),
 	        _react2.default.createElement(_DistrictOfficeGroups2.default, { groups: this.props.store.offices[0].groupConnection.edges })
 	      );
 	    }
@@ -22153,6 +22174,9 @@
 	}(_react2.default.Component);
 	
 	DistrictOffice = _reactRelay2.default.createContainer(DistrictOffice, {
+	  initialVariables: {
+	    limit: 10
+	  },
 	  // data requirements
 	  fragments: {
 	    store: function store() {
@@ -22172,8 +22196,8 @@
 	                },
 	                name: 'first',
 	                value: {
-	                  kind: 'CallValue',
-	                  callValue: 3
+	                  kind: 'CallVariable',
+	                  callVariableName: 'limit'
 	                }
 	              }],
 	              children: [{
@@ -22368,6 +22392,8 @@
 	    value: function render() {
 	      //  console.log ('groups props: '+JSON.stringify(this.props));
 	      // everything now will be in props.store and managed by relay
+	      this.state.groups = [];
+	
 	      for (var i = 0; i < this.props.groups.length; i++) {
 	        this.state.groups.push(_react2.default.createElement(_Group2.default, { groupName: this.props.groups[i].node.nazwaGrupy }));
 	      }

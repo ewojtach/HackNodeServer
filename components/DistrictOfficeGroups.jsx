@@ -50,6 +50,8 @@ class DistrictOfficeGroups extends React.Component {
   render() {
   //  console.log ('groups props: '+JSON.stringify(this.props));
     // everything now will be in props.store and managed by relay
+    this.state.groups = [];
+
     for (let i = 0; i < this.props.groups.length; i++) {
       this.state.groups.push(
         <Group groupName = {this.props.groups[i].node.nazwaGrupy}/>

@@ -41,7 +41,7 @@ module.exports = new GraphQLObjectType({
     },
     groupConnection: {
       type: groupConnection.connectionType,
-      args: connectionArgs, // first:... last:...
+      args: connectionArgs, // first:... last:...  dla wolania db, bedzie limit(args.first) + promise przy connection
       resolve: (_, args) => connectionFromArray([
         // call um data api [
         {
